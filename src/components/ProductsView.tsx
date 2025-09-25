@@ -3,11 +3,11 @@ import styles from "./ProductsView.module.css";
 import { getAllProducts } from "../products";
 import Product from "./Product";
 
-const ProductsView = () => {
+const ProductsView: React.FC = () => {
   const products = getAllProducts();
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h1>Shop Products</h1>
       <div className={styles.products}>
         {products.map((product) => (

@@ -1,9 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 
-/* This component is used to display a single product in the products view. */
+// Define TypeScript interface for props
+interface ProductProps {
+  id: number;
+  imagePath: string;
+  name: string;
+  price: number;
+}
 
-export default function Product({ id, imagePath, name, price }) {
+const Product: React.FC<ProductProps> = ({ id, imagePath, name, price }) => {
   return (
     <div className={styles.product} key={id} data-testid={`product-${id}`}>
       <img src={imagePath} alt="Placeholder" />
@@ -11,8 +18,10 @@ export default function Product({ id, imagePath, name, price }) {
       <div>${price}</div>
       <div>
         {/* Replace anchor element with router Link */}
-        <a href="#">View Details</a>
+        <Link to={`/products/${id}`}>View Details</Link>
       </div>
     </div>
   );
-}
+};
+
+export default Product;

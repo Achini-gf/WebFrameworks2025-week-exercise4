@@ -1,18 +1,29 @@
 import React from "react";
+import { useParams, Link } from "react-router-dom";
 import { getProductById } from "../products";
 
-const ProductDetailsView = () => {
-  // Replace this static product id with a dynamic one retrieved from the router
-  // See documentation on how to retrieve the id from the router
-  // https://reactrouter.com/start/declarative/routing#dynamic-segments
-  const id = 1;
+const ProductDetailsView: React.FC = () => {
+  // Get the dynamic id parameter from the URL using useParams hook
+  const { id } = useParams<{ id: string }>();
+  
+  // Convert string id to number and handle undefined case
+  const productId = id ? parseInt(id, 10) : 0;
+  
+  // Get product details
+  const product = getProductById(productId);
 
-  // getProductById is a function to fetch product details from the products.js file.
-  // In a real application, this would be an API call to the backend.
-  const product = getProductById(id);
+  // Handle case where product is not found
+  if (!product) {
+    return (
+      <div>
+        <h2>Product Not Found</h2>
+        <Link to="/">Back to Products</Link>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h2>{product.name}</h2>
       <div style={{ display: "flex" }}>
         <div style={{ marginRight: "20px" }}>
@@ -30,7 +41,7 @@ const ProductDetailsView = () => {
           </div>
           <div style={{ marginTop: "20px" }}>
             {/* Replace anchor element with router Link */}
-            <a href="#">Back to Products</a>
+            <Link to="/">Back to Products</Link>
           </div>
         </div>
       </div>
